@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { Search } from "react-feather";
 import RingLoader from "react-spinners/RingLoader";
 
-function bvnSearch() {
+function BvnSearch() {
   const [showSearchLoading, setShowSearchLoading] = useState(false);
   const [showSearchResults, setShowSearchResults] = useState(false);
   useEffect(() => {
@@ -62,4 +62,4 @@ function bvnSearch() {
   );
 }
 
-export default bvnSearch;
+export default BvnSearch;

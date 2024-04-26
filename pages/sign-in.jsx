@@ -7,7 +7,7 @@ export default function Home() {
         <div className="mx-auto max-w-lg text-center">
           <h1 className="text-2xl font-bold sm:text-3xl">Sign In!</h1>
           <p className="mt-4 text-gray-500">
-            Don't have an account?{" "}
+            Don&rsquo;t have an account?{" "}
             <Link className="text-purple-500 underline" href={"/sign-up"}>
               Sign Up{" "}
             </Link>

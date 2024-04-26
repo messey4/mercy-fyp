@@ -150,7 +150,7 @@ function ApplyLoan({ states }) {
                               >
                                 <option value={"abuja"}>Abuja</option>
                                 {states?.map((state, index) => (
-                                  <option value={state?.id}>
+                                  <option value={state?.id} key={index}>
                                     {state?.name}
                                   </option>
                                 ))}

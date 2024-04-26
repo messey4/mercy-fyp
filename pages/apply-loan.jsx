@@ -12,7 +12,7 @@ function ApplyLoan({ states }) {
     <>
       <main className="text-gray-800">
         <div className="grid md:grid-cols-2 min-h-screen">
-          <div className="bg-[url('/images/apply-for-loan-bg.jpeg')] bg-cover"></div>
+          <div className="bg-[url('/images/apply-for-loan-bg.jpeg')] hidden md:block bg-cover"></div>
 
           <div className="p-8 px- space-y-5">
             <h1 className="text-center text-[2rem] font-bold">
@@ -37,7 +37,7 @@ function ApplyLoan({ states }) {
                 />
               </div>
 
-              <div className="sm:grid sm:grid-cols-2 gap-5">
+              <div className="sm:grid sm:grid-cols-2 sm:gap-5 space-y-3 sm:space-y-0">
                 {(() => {
                   switch (formIndex) {
                     case 1:

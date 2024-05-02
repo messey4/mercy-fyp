@@ -43,7 +43,7 @@ function NavBar() {
         <li>
           <Link
             className="py-6 px-8 md:px-4 inline-block w-full hover:bg-slate-50 hover:text-black text-slate-500 "
-            href={"#"}
+            href={"/fi-bot"}
           >
             FI Bot
           </Link>

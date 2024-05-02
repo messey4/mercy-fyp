@@ -12,9 +12,9 @@ export default function Chatbox() {
         <div className="bg-white shadow-lg rounded-lg max-w-md mx-auto  bg-[url('/images/fi-bot.jpg')] bg-cover bg-no-repeat bg-center h-[80vh] flex flex-col">
           {/*Chatbox Header Div*/}
 
-          <div className="border-b-2 px-2 py-4">
+          <div className="border-b-2 px-2 py-4 bg-white rounded-t-md">
             <div className="inline-flex items-center">
-              <span className="ml-4 text-white font-bold">FI Bot 🤖✨</span>
+              <span className="ml-4 font-bold">FI Bot 🤖✨</span>
             </div>
           </div>
           {/*Chatbox Body Div*/}

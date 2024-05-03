@@ -76,7 +76,7 @@ export default function Home() {
           <div className="flex items-center justify-center">
             <button
               type="submit"
-              className="inline-block rounded-lg bg-blue-500 px-5 py-3 text-sm font-medium text-white w-full"
+              className="inline-block rounded-lg bg-green-500 px-5 py-3 text-sm font-medium text-white w-full"
             >
               Sign in
             </button>

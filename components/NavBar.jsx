@@ -5,8 +5,8 @@ import { useRouter } from "next/router";
 
 function NavBar() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const router =useRouter()
-  
+  const router = useRouter();
+
   return (
     <nav className="py-4 md:py-0 px-4 bg-white w-full flex justify-between items-center shadow-lg">
       <button
@@ -23,7 +23,7 @@ function NavBar() {
         <li>
           <Link
             className={`py-6 px-8 md:px-4 inline-block w-full hover:bg-slate-50 hover:text-black ${
-              router.pathname == "/" ? "text-black font-bold" : ""
+              router.pathname == "/" ? "text-black font-bold" : "text-slate-500"
             } `}
             href={"/"}
           >
@@ -32,8 +32,10 @@ function NavBar() {
         </li>
         <li>
           <Link
-            className={`py-6 px-8 md:px-4 inline-block w-full hover:bg-slate-50 hover:text-black text-slate-500 ${
-              router.pathname == "/bvn-search" ? "text-black font-bold" : ""
+            className={`py-6 px-8 md:px-4 inline-block w-full hover:bg-slate-50 hover:text-black  ${
+              router.pathname == "/bvn-search"
+                ? "text-black font-bold"
+                : "text-slate-500"
             } `}
             href={"/bvn-search"}
           >
@@ -42,7 +44,11 @@ function NavBar() {
         </li>
         <li>
           <Link
-            className="py-6 px-8 md:px-4 inline-block w-full hover:bg-slate-50 hover:text-black text-slate-500 "
+            className={`py-6 px-8 md:px-4 inline-block w-full hover:bg-slate-50 hover:text-black text-slate-500 ${
+              router.pathname == "/fi-bot"
+                ? "text-black font-bold"
+                : "text-slate-500"
+            } `}
             href={"/fi-bot"}
           >
             FI Bot
@@ -51,7 +57,9 @@ function NavBar() {
         <li>
           <Link
             className={`py-6 px-8 md:px-4 inline-block w-full hover:bg-slate-50 hover:text-black text-slate-500 ${
-              router.pathname == "/apply-loan" ? "text-black font-bold" : ""
+              router.pathname == "/apply-loan"
+                ? "text-black font-bold"
+                : "text-slate-500"
             } `}
             href={"/apply-loan"}
           >

@@ -1,6 +1,41 @@
 import Link from "next/link";
+import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+import { signUp } from "@/api/requests";
+import { Eye, EyeOff, Mail } from "react-feather";
+import { useState } from "react";
+import { ClipLoader, RingLoader } from "react-spinners";
+import { useRouter } from "next/router";
+import Cookies from "js-cookie";
 
-export default function Home() {
+export default function SignUp() {
+  const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm();
+
+  const submitData = async (data) => {
+    try {
+      const { data: res } = await signUp(data);
+      toast.success("Account created successfully");
+      Cookies.set("accessToken", res.token, { expires: 90 });
+      const queryParams = router.query;
+      router.push(queryParams?.cb || "/");
+      console.log(res);
+    } catch (error) {
+      toast.error(
+        error?.data?.error ||
+          error?.message ||
+          "Something went wrong, please try again later."
+      );
+      console.error(error);
+    }
+  };
+
   return (
     <>
       <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
@@ -8,13 +43,17 @@ export default function Home() {
           <h1 className="text-2xl font-bold sm:text-3xl">Sign Up!</h1>
           <p className="mt-4 text-gray-500">
             Already have an account?{" "}
-            <Link className="text-purple-500 underline" href={"/sign-up"}>
+            <Link className="text-purple-500 underline" href={"/sign-in"}>
               Sign In{" "}
             </Link>
           </p>
         </div>
         {/* Form starts here */}
-        <form action="#" className="mx-auto mb-0 mt-8 max-w-md space-y-4">
+        <form
+          action="#"
+          className="mx-auto mb-0 mt-8 max-w-md space-y-4"
+          onSubmit={handleSubmit(submitData)}
+        >
           <div className="flex gap-3">
             <div>
               <label>First Name</label>
@@ -23,84 +62,95 @@ export default function Home() {
                   type="text"
                   className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
                   placeholder="John"
+                  {...register("firstname", {
+                    required: "First name is required",
+                  })}
                 />
               </div>
+              <p className="text-red-500 text-sm text-start">
+                {errors.firstname?.message}
+              </p>
             </div>
             <div>
               <label>Last Name</label>
               <div className="relative">
                 <input
+                  {...register("lastname", {
+                    required: "Last name is required",
+                  })}
                   type="text"
                   className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
                   placeholder="Doe"
                 />
               </div>
+              <p className="text-red-500 text-sm text-start">
+                {errors.lastName?.message}
+              </p>
             </div>
           </div>
           <div>
             <label>Email</label>
             <div className="relative">
               <input
+                {...register("email", { required: "Email is required" })}
                 type="email"
                 className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
                 placeholder="Enter email"
               />
               <span className="absolute inset-y-0 end-0 grid place-content-center px-4">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="size-4 text-gray-400"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"
-                  />
-                </svg>
+                <Mail className="text-slate-400" size={18} />
               </span>
             </div>
+            <p className="text-red-500 text-sm text-start">
+              {errors.email?.message}
+            </p>
           </div>
           <div>
-            <label htmlFor="password">Password</label>
-            <div className="relative">
-              <input
-                type="password"
-                className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
-                placeholder="Enter password"
-              />
-              <span className="absolute inset-y-0 end-0 grid place-content-center px-4">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="size-4 text-gray-400"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
+            <div>
+              <label htmlFor="password">Password</label>
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+                  placeholder="Enter password"
+                  {...register("password", {
+                    required: "Password is required",
+                  })}
+                />
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowPassword(!showPassword);
+                  }}
+                  className="absolute inset-y-0 end-0 grid place-content-center px-4"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                  />
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                  />
-                </svg>
-              </span>
+                  {showPassword ? (
+                    <EyeOff className="text-slate-400" size={18} />
+                  ) : (
+                    <Eye className="text-slate-400" size={18} />
+                  )}
+                </button>
+              </div>
             </div>
+            <p className="text-red-500 text-sm text-start">
+              {errors.password?.message}
+            </p>
           </div>
           <div className="flex items-center justify-center">
             <button
               type="submit"
-              className="inline-block rounded-lg bg-green-500 px-5 py-3 text-sm font-medium text-white w-full"
+              className={`rounded-lg bg-green-500 px-5 py-3 text-sm font-medium text-white 
+              w-full flex gap-2 items-center justify-center ${
+                isSubmitting ? "hover:cursor-not-allowed" : ""
+              }`}
+              disabled={isSubmitting}
             >
-              Sign in
+              Sign Up
+              {isSubmitting && (
+                <span>
+                  <ClipLoader color="white" size={15} />
+                </span>
+              )}
             </button>
           </div>
         </form>

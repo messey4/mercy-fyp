@@ -68,12 +68,12 @@ function NavBar() {
         </li>
       </ul>
       <div className="flex gap-5">
-        <Link href="/sign-in">
+        <Link href={`/sign-in?cb=${router.pathname}`}>
           <button className="p-1.5 md:p-2 md:px-2.5 bg-white  rounded-lg hover:bg-green-500 hover:text-white transition-colors duration-100">
             Sign In
           </button>
         </Link>
-        <Link href="/sign-up">
+        <Link href={`/sign-up?cb=${router.pathname}`}>
           <button className="p-1.5 md:p-2 md:px-2.5 bg-white border-black border-2 rounded-lg hover:bg-black hover:text-white hover:border-none transition-all duration-100">
             Sign Up
           </button>

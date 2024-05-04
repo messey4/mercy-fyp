@@ -3,18 +3,33 @@ import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
 import { Search } from "react-feather";
 import RingLoader from "react-spinners/RingLoader";
+import { toast } from "react-toastify";
+import { bvnSearch } from "@/api/requests";
 
 function BvnSearch() {
   const [showSearchLoading, setShowSearchLoading] = useState(false);
   const [showSearchResults, setShowSearchResults] = useState(false);
+  const [bvnResults, setBvnResults] = useState(null);
   const {
     handleSubmit,
     formState: { errors, isSubmitting },
     register,
   } = useForm();
 
-  const submitForm = (data) => {
-    console.log(data);
+  const submitForm = async (data) => {
+    try {
+      const { data: res } = await bvnSearch(data);
+      console.log(res);
+      setBvnResults(res);
+      toast.success("BVN search successful");
+    } catch (error) {
+      toast.error(
+        error?.data?.error ||
+          error?.response?.error ||
+          "Something went wrong, please try again later"
+      );
+      console.error(error);
+    }
   };
   const nonNumericRegex = /\D/;
 
@@ -51,7 +66,7 @@ function BvnSearch() {
                     : "outline-green-500"
                 } p-4 pe-12 text-sm shadow-sm`}
                 maxlength="11"
-                {...register("bvn", {
+                {...register("number", {
                   onChange: (e) => {
                     e.target.value = e.target.value.replace(
                       nonNumericRegex,
@@ -67,6 +82,7 @@ function BvnSearch() {
               <button
                 type="submit"
                 className="absolute bg-green-500 text-white rounded-e-lg inset-y-0 end-0 grid place-content-center px-4"
+                disabled={isSubmitting}
               >
                 <Search
                   className=""
@@ -79,22 +95,19 @@ function BvnSearch() {
               </button>
             </div>
             <p className="text-red-500 text-small text-start">
-              {errors.bvn?.message}
+              {errors.number?.message}
             </p>
           </form>
         </div>
-        {showSearchLoading && (
+        {isSubmitting && (
           <div className="h-[200px] flex items-center justify-center flex-col">
             <RingLoader color="green" />
             <p className="text-green-500">Please wait...</p>
           </div>
         )}
-        {showSearchResults && (
+        {bvnResults && (
           <div className="h-[200px] flex items-center justify-center flex-col">
-            <p>
-              Dear [Name], Your credit score is [X] meaning your loan
-              eligibility is[X]
-            </p>
+            <p>{`${bvnResults}`}</p>
           </div>
         )}
       </main>

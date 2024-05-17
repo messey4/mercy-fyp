@@ -8,7 +8,7 @@ export const config = {
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
      */
-    "/((?!api|_next/static|_next/image|favicon.ico).*)",
+    "/((?!api|_next/static|_next/image|images|favicon.ico).*)",
   ],
 };
 export default function middleware(request) {
@@ -16,7 +16,7 @@ export default function middleware(request) {
   const allowAccess = cookieJar.get("accessToken");
   const { pathname } = request.nextUrl;
   const protectedRoutes = ["/bvn-search", "/fi-bot", "/apply-loan"];
-
+  console.log(pathname);
   if (protectedRoutes.includes(pathname) && !allowAccess) {
     return NextResponse.redirect(
       `${request.nextUrl.origin}/sign-in?cb=${pathname}`

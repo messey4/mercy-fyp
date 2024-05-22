@@ -25,7 +25,7 @@ export default function Home() {
       toast.success("Sign in successfull");
       Cookies.set("accessToken", res.token, { expires: 90 });
       const queryParams = router.query;
-      router.push(queryParams?.cb || "/");
+      window.location.href = queryParams?.cb || "/";
     } catch (error) {
       toast.error(
         error?.data?.error ||

@@ -1,15 +1,23 @@
+import Meta from "@/components/Meta";
 import axios from "axios";
+import Image from "next/image";
+import Link from "next/link";
 import { useState, useEffect } from "react";
 
 function ApplyLoan({ states }) {
   const [formIndex, setFormIndex] = useState(1);
   const [showSubmitButton, setShowSubmitButton] = useState(false);
   useEffect(() => {
-    formIndex == 3 ? setShowSubmitButton(true) : setShowSubmitButton(false);
+    formIndex == 6
+      ? setTimeout(() => {
+          setShowSubmitButton(true);
+        }, 0)
+      : setShowSubmitButton(false);
   }, [formIndex]);
 
   return (
     <>
+      <Meta />
       <main className="text-gray-800">
         <div className="grid md:grid-cols-2 min-h-screen">
           <div className="bg-[url('/images/apply-for-loan-bg.jpeg')] hidden md:block bg-cover"></div>
@@ -33,6 +41,21 @@ function ApplyLoan({ states }) {
                 <div
                   className={`p-1.5 rounded-full transition-colors duration-100 ${
                     formIndex == 3 ? "bg-green-500" : "bg-slate-500"
+                  }`}
+                />
+                <div
+                  className={`p-1.5 rounded-full transition-colors duration-100 ${
+                    formIndex == 4 ? "bg-green-500" : "bg-slate-500"
+                  }`}
+                />
+                <div
+                  className={`p-1.5 rounded-full transition-colors duration-100 ${
+                    formIndex == 5 ? "bg-green-500" : "bg-slate-500"
+                  }`}
+                />
+                <div
+                  className={`p-1.5 rounded-full transition-colors duration-100 ${
+                    formIndex == 6 ? "bg-green-500" : "bg-slate-500"
                   }`}
                 />
               </div>
@@ -230,42 +253,157 @@ function ApplyLoan({ states }) {
                           </div>
                         </>
                       );
+                    case 4:
+                      return (
+                        <>
+                          <p className="font-bold uppercase text-sm col-span-2">
+                            Step 4 of 7 (Guarantor Information)
+                          </p>
+                          <div>
+                            <label htmlFor="email">Guarantor BVN</label>
+                            <input
+                              type="number"
+                              className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+                              placeholder="Veritas University"
+                            />
+                          </div>
+                          <div>
+                            <label htmlFor="email">Guarantor NIN</label>
+                            <input
+                              type="number"
+                              className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+                              placeholder="Veritas University"
+                            />
+                          </div>
+                        </>
+                      );
+                    case 5:
+                      return (
+                        <>
+                          <p className="font-bold uppercase text-sm col-span-2">
+                            Step 5 of 7 (Business and Colateral Info)
+                          </p>
+                          <div>
+                            <label htmlFor="email">Vehicle Documentation</label>
+                            <div className="relative">
+                              <input
+                                type="file"
+                                className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+                              />
+                            </div>
+                          </div>
+                          <div>
+                            <label htmlFor="email">
+                              Property Documentation
+                            </label>
+                            <div className="relative">
+                              <input
+                                type="file"
+                                className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+                              />
+                            </div>
+                          </div>
+                          <div>
+                            <label htmlFor="email">
+                              Investment Portfolio Documentation
+                            </label>
+                            <div className="relative">
+                              <input
+                                type="file"
+                                className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+                              />
+                            </div>
+                          </div>
+                          <div>
+                            <label htmlFor="email">
+                              Proof of Ownership: For land, farms, business
+                              equipment etc
+                            </label>
+                            <div className="relative">
+                              <input
+                                type="file"
+                                className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+                              />
+                            </div>
+                          </div>
+                        </>
+                      );
+                    case 6:
+                      return (
+                        <>
+                          <p className="font-bold uppercase text-sm col-span-2">
+                            Step 6 of 7 ( Business License or Registration)
+                          </p>
+                          <div>
+                            <label htmlFor="email"> Cash Flow statement</label>
+                            <div className="relative">
+                              <input
+                                type="file"
+                                className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+                                placeholder="Enter email"
+                              />
+                            </div>
+                          </div>
+                        </>
+                      );
+                    case 7:
+                      return (
+                        <>
+                          <div className="flex flex-col gap-4 items-center text-center  col-span-2">
+                            <Image
+                              alt="success image"
+                              src="/images/successful-loan-illustration.png"
+                              height={500}
+                              width={500}
+                            />
+
+                            <p className="text-green-500 text-center">
+                              Loan Application has been sent successfully.
+                            </p>
+                            <small>
+                              We will review your request and get back to you
+                              shortly.
+                            </small>
+                            <Link
+                              href="/"
+                              className="inline-block py-1 px-3 rounded-xl bg-green-400 text-white"
+                            >
+                              Go Home
+                            </Link>
+                          </div>
+                        </>
+                      );
                   }
                 })()}
               </div>
-              <div className="flex justify-end gap-5">
-                {formIndex > 1 && (
-                  <button
-                    className="text-white rounded-lg px-6 p-2 bg-red-500"
-                    onClick={() => {
-                      if (formIndex > 1) {
-                        setFormIndex((prev) => prev - 1);
-                      }
-                    }}
-                  >
-                    Back
-                  </button>
-                )}
-                {showSubmitButton ? (
-                  <button
-                    className="text-white rounded-lg px-6 p-2 bg-green-500"
-                    type="submit"
-                  >
-                    Submit
-                  </button>
-                ) : (
+              {formIndex != 7 && (
+                <div className="flex justify-end gap-5">
+                  {formIndex > 1 && (
+                    <button
+                      className="text-white rounded-lg px-6 p-2 bg-red-500"
+                      type="button"
+                      onClick={() => {
+                        if (formIndex > 1) {
+                          setFormIndex((prev) => prev - 1);
+                        }
+                      }}
+                    >
+                      Back
+                    </button>
+                  )}
                   <button
                     className="text-white rounded-lg px-6 p-2 bg-green-500"
+                    type="button"
                     onClick={() => {
-                      if (formIndex < 3) {
+                      if (formIndex < 7) {
                         setFormIndex((prev) => prev + 1);
                       }
                     }}
                   >
-                    Next
+                    {formIndex == 6 ? "Submit" : "Next"}
                   </button>
-                )}
-              </div>
+                </div>
+              )}
             </form>
           </div>
         </div>

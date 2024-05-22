@@ -24,8 +24,11 @@ export default function SignUp() {
       toast.success("Account created successfully");
       Cookies.set("accessToken", res.token, { expires: 90 });
       const queryParams = router.query;
-      router.push(queryParams?.cb || "/");
-      console.log(res);
+      const {
+        data: { user },
+      } = res;
+      localStorage.setItem("user", JSON.stringify(user));
+      window.location.href = queryParams?.cb || "/";
     } catch (error) {
       toast.error(
         error?.data?.error ||

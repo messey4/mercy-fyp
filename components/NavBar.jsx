@@ -65,13 +65,13 @@ function NavBar() {
         <li>
           <Link
             className={`py-6 px-8 md:px-4 inline-block w-full hover:bg-slate-50 hover:text-black  ${
-              router.pathname == "/bvn-search"
+              router.pathname == "/loan-eligibility"
                 ? "text-black font-bold"
                 : "text-slate-500"
             } `}
-            href={"/bvn-search"}
+            href={"/loan-eligibility"}
           >
-            BVN Search
+            Loan Eligibility
           </Link>
         </li>
         <li>

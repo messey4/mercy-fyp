@@ -15,7 +15,7 @@ export default function middleware(request) {
   const cookieJar = request.cookies;
   const allowAccess = cookieJar.get("accessToken");
   const { pathname } = request.nextUrl;
-  const protectedRoutes = ["/bvn-search", "/fi-bot", "/apply-loan"];
+  const protectedRoutes = ["/loan-eligibility", "/fi-bot", "/apply-loan"];
   console.log(pathname);
   if (protectedRoutes.includes(pathname) && !allowAccess) {
     return NextResponse.redirect(
